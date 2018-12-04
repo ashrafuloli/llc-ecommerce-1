@@ -25,4 +25,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }
