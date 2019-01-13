@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->realText(random_int(10, 15)),
+        'name' => $faker->city.' '.random_int(1, 10),
         'banner' => $faker->imageUrl(),
     ];
 });
