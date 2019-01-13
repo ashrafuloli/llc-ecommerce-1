@@ -125,7 +125,16 @@ class CartController extends Controller
         }
 
         session()->forget(['total', 'cart']);
+        session()->flash('message', 'Order placed successfully.');
 
-        return redirect('/');
+        return redirect()->route('order.details', $order->id);
+    }
+
+    public function showOrder($id)
+    {
+        $data = [];
+        $data['order'] = Order::with(['products', 'products.product'])->findOrFail($id);
+
+        return view('frontend.orders.details', $data);
     }
 }
