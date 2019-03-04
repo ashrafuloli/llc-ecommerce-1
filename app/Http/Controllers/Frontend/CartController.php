@@ -14,11 +14,7 @@ class CartController extends Controller
 {
     public function showCart()
     {
-        $data = [];
-        $data['cart'] = session()->has('cart') ? session()->get('cart') : [];
-        $data['total'] = array_sum(array_column($data['cart'], 'total_price'));
-
-        return view('frontend.cart', $data);
+        return view('frontend.cart');
     }
 
     public function addToCart(Request $request)

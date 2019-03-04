@@ -27,3 +27,8 @@ Route::group(['namespace' => 'Frontend'], function () {
         Route::get('/logout', 'AuthController@logout')->name('logout');
     });
 });
+
+Route::get('/api/cart', 'Frontend\HomeController@getCart');
+Route::get('/api/pdf', 'Frontend\HomeController@getPdf');
+Route::get('/api/sms', 'Frontend\HomeController@sendSms');
+Route::post('/', 'Frontend\HomeController@getPayment');

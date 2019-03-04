@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,7 +10,17 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
+    Route::get('/', function () {
+        return response()->json([
+            'success' => true,
+            'message' => 'Welcome to Ecommerce API',
+            'data' => [],
+        ]);
+    });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/cart', 'CartController@getCart');
+    Route::post('/cart', 'CartController@addToCart');
+    Route::post('/cart/remove', 'CartController@removeFromCart');
+    Route::post('/cart/clear', 'CartController@clearCart');
 });

@@ -23,10 +23,8 @@
 
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <form action="{{ route('cart.add') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <form>
+                                            <button type="submit" @click.prevent="addToCart({{ $product->id }})" class="btn btn-sm btn-outline-secondary">
                                                 Add to Cart
                                             </button>
                                         </form>

@@ -12,56 +12,50 @@
             </div>
         @endif
 
-        @if(empty($cart))
-            <div class="alert alert-info">
-                Please add some products to your cart.
-            </div>
-        @else
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <td>Serial</td>
-                    <td>Product</td>
-                    <td>Unit Price</td>
-                    <td>Quantity</td>
-                    <td>Price</td>
-                    <td>Action</td>
-                </tr>
-                </thead>
-                <tbody>
-                @php $i = 1 @endphp
-                @foreach ($cart as $key => $product)
-                    <tr>
-                        <td>{{ $i++ }}</td>
-                        <td>{{ $product['title'] }}</td>
-                        <td>BDT {{ number_format($product['unit_price'], 2) }}</td>
-                        <td><input type="number" name="quantity" value="{{ $product['quantity'] }}"></td>
-                        <td>BDT {{ number_format($product['total_price'], 2) }}</td>
-                        <td>
-                            <form action="{{ route('cart.remove') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $key }}">
-                                <button type="submit" class="btn btn-lg btn-outline-secondary">
-                                    Remove
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total</td>
-                    <td>BDT {{ number_format($total, 2) }}</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="alert alert-info" v-if="cart.length === 0">
+            Please add some products to your cart.
+        </div>
 
-            <a href="{{ route('cart.clear') }}" class="btn btn-danger">Clear Cart</a>
-            <a href="{{ route('checkout') }}" class="btn btn-success">Checkout</a>
-        @endif
+        <table class="table table-bordered" v-else>
+            <thead>
+            <tr>
+                <td>Serial</td>
+                <td>Product</td>
+                <td>Unit Price</td>
+                <td>Quantity</td>
+                <td>Price</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="product,id in cart">
+                <td>@{{ id }}</td>
+                <td>@{{ product.title }}</td>
+                <td>BDT @{{ product.unit_price }}</td>
+                <td>@{{ product.quantity }}</td>
+                <td>BDT @{{ product.total_price }}</td>
+                <td>
+                    <form>
+                        <button type="submit" @click.prevent="removeFromCart(id)" class="btn btn-lg btn-outline-secondary">
+                            Remove
+                        </button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>BDT @{{ total }}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a @click.prevent="clearCart()" class="btn btn-danger">Clear Cart</a>
+        <a href="{{ route('checkout') }}" class="btn btn-success">Checkout</a>
 
     </div>
 @stop
